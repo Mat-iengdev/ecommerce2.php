@@ -1,0 +1,50 @@
+body {
+    background-color: #333;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+}
+h1 {
+    font-size: 5rem;
+}
+p {
+    font-size: 1.5rem;
+}
+/* Animation blink */
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+
+/* Animation pour faire défiler le texte de droite à gauche */
+@keyframes scroll {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* Animation pour faire taper le texte contre les bords (gauche, haut, droite, bas) */
+@keyframes hitEdges {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-300px, 0); } /* Gauche de 300px */
+    50% { transform: translate(0, -300px); } /* Haut de 300px */
+    75% { transform: translate(300px, 0); } /* Droite de 300px */
+    100% { transform: translate(0, 300px); } /* Bas de 300px */
+}
+
+/* Pour la balise p */
+h1 {
+    font-size: 8rem;
+    color: red;
+    animation: blink 1s infinite, scroll 10s linear infinite, hitEdges 2s ease infinite;
+    white-space: nowrap;
+    display: inline-block;
+    position: relative;
+}
+
+ul {
+    list-style-type: none;
+}
+li {
+    text-decoration: none;
+}
