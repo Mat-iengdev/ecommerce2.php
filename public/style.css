@@ -11,40 +11,94 @@ h1 {
 p {
     font-size: 1.5rem;
 }
-/* Animation blink */
-@keyframes blink {
-    0%, 50%, 100% { opacity: 1; }
-    25%, 75% { opacity: 0; }
-}
 
-/* Animation pour faire défiler le texte de droite à gauche */
-@keyframes scroll {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-}
-
-/* Animation pour faire taper le texte contre les bords (gauche, haut, droite, bas) */
-@keyframes hitEdges {
-    0% { transform: translate(0, 0); }
-    25% { transform: translate(-300px, 0); } /* Gauche de 300px */
-    50% { transform: translate(0, -300px); } /* Haut de 300px */
-    75% { transform: translate(300px, 0); } /* Droite de 300px */
-    100% { transform: translate(0, 300px); } /* Bas de 300px */
-}
-
-/* Pour la balise p */
-h1 {
+#error {
     font-size: 8rem;
-    color: red;
-    animation: blink 1s infinite, scroll 10s linear infinite, hitEdges 2s ease infinite;
+    color: transparent;  /* Rendre le texte transparent pour voir le dégradé */
+    background-image: linear-gradient(45deg, red, blue, green, yellow); /* Dégradé de couleur */
+    background-size: 400% 400%; /* Agrandit le dégradé pour qu'il puisse se déplacer */
+    animation: gradientMove 2s ease infinite, bounce 1s ease infinite, shake 0.5s ease infinite; /* Ajout des animations */
     white-space: nowrap;
     display: inline-block;
     position: relative;
+    -webkit-background-clip: text;  /* Important pour afficher le dégradé dans le texte */
+    background-clip: text; /* Pour le support cross-browser */
+    margin-top: 150px;
 }
+
+/* Animation pour le déplacement du dégradé */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animation de rebond */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0); /* Position de départ */
+    }
+    50% {
+        transform: translateY(-20px); /* Le rebond */
+    }
+}
+
+/* Animation de secousse (vibrer) */
+@keyframes shake {
+    0% {
+        transform: translateX(0); /* Position initiale */
+    }
+    25% {
+        transform: translateX(-10px); /* Secousse gauche */
+    }
+    50% {
+        transform: translateX(10px); /* Secousse droite */
+    }
+    75% {
+        transform: translateX(-10px); /* Secousse gauche */
+    }
+    100% {
+        transform: translateX(0); /* Retour à la position de départ */
+    }
+}
+
+/* Positionner l'image de manière absolue */
+.falling-logo {
+    position: absolute;
+    width: 50px; /* Taille de l'image */
+    height: auto;
+    animation: fall linear infinite;
+    pointer-events: none; /* Empêche les images de gêner les interactions de la souris */
+}
+
+/* Animation pour faire tomber les images */
+@keyframes fall {
+    0% {
+        top: -50px; /* Commence au-dessus de la page */
+        opacity: 1;
+    }
+    100% {
+        top: 100vh; /* Tombe jusqu'en bas de la page */
+        opacity: 0; /* L'image disparaît progressivement */
+    }
+}
+
+
 
 ul {
     list-style-type: none;
 }
-li {
+a {
     text-decoration: none;
+    color: white;
+}
+
+footer {
+    padding-top: 80px;
 }

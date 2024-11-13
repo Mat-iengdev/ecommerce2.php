@@ -15,7 +15,7 @@ class Order
             throw new Exception("Merci de remplir un nom correct");
         }
 
-        $this->status === 'cart';
+        $this->status = 'cart';
         $this->totalPrice = 0;
         $this->customerName = $customerName;
         $this->id = uniqid();
@@ -26,6 +26,8 @@ class Order
         if ($this->status === "cart") {
             $this->products[] = "Pringles";
             $this->totalPrice += 3;
+        } else {
+            throw new Exception("La commande ne peut pas être modifiée");
         }
     }
 
@@ -41,8 +43,11 @@ class Order
     {
         if ($this->status === "cart") {
             $this->shippingAddress = $shippingAddress;
-            $this->status === "shippingAddressSet";
+            $this->status = "shippingAddressSet";
+        } else {
+            throw new Exception("L'adresse de livraison ne peut être modifiée.");
         }
+
     }
 
     public function pay()
@@ -65,5 +70,35 @@ class Order
         } else {
             throw new Exception("La commande ne peux pas être expédiée. elle n'est pas encore payée");
         }
+    }
+
+    public function dateTime() {
+        // Utilise la fonction date pour formater la date
+        $dateTime = date('d-m-Y'); // Format : jour-mois-année
+        return $dateTime;
+    }
+
+    public function hourTime() {
+        // Utilise la fonction date pour formater l'heure actuelle
+        $dateTime = date('H:i'); // Format : heure:minutes
+        return $dateTime;
+    }
+
+    public function totalPrice() {
+        return $this->totalPrice;
+    }
+
+    // On crée une méthode (getter) afin de récupérer l'id sans qu'il devienne modifiable
+    public function getId() {
+        return $this->id;
+    }
+    public function getProducts() {
+        return $this->products;
+    }
+    public function getAddress() {
+        return $this->shippingAddress;
+    }
+    public function getCustomerName() {
+        return $this->customerName;
     }
 }
