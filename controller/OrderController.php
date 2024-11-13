@@ -42,9 +42,7 @@ class OrderController
 // Nouvelle méthode addProduct
     public function addProduct(): void
     {
-
-        // On récupère ici $Order en base de données
-
+        require_once "../view/partials/_header.php";
         $message = null;
         // On instancie OrderRepository
         $orderRepository = new OrderRepository();
@@ -59,11 +57,17 @@ class OrderController
         } catch (Exception $exception) {
             $message = $exception->getMessage();
         }
-        require_once '../view/add-product-view.php';
+        $loader = new \Twig\Loader\FilesystemLoader('../view');
+        $twig = new \Twig\Environment($loader);
+        echo $twig->render('add-product.twig', [
+            'message' => $message,
+            'order' => $order
+        ]);
     }
 
     // Nouvelle méthode pour supprimer un produit de notre commande
     public function removeProduct(): void {
+        require_once "../view/partials/_header.php";
         $message = null;
         // On crée une nouvelle instance OrderRepository()
         $orderRepository = new OrderRepository();
@@ -77,10 +81,13 @@ class OrderController
         } catch (Exception $exception) {
             $message = $exception->getMessage();
         }
-        require_once '../view/remove-product-view.php';
+        $loader = new \Twig\Loader\FilesystemLoader('../view');
+        $twig = new \Twig\Environment($loader);
+        echo $twig->render('remove-product.twig', ['message' => $message]);
     }
 
     public function setShippingAddress(): void {
+        require_once "../view/partials/_header.php";
         $message = null;
         // On crée une nouvelle instance
         // Pour pouvoir utiliser ses méthodes
@@ -105,11 +112,16 @@ class OrderController
                 }
             }
         }
-        require_once('../view/set-shipping-address-view.php');
+        $loader = new \Twig\Loader\FilesystemLoader('../view');
+        $twig = new \Twig\Environment($loader);
+        echo $twig->render('set-shipping-address.twig', [
+            'message' => $message,
+            'order' => $order
+        ]);
     }
     // Méthode pour gérer le paiement
-    public function pay(): void
-    {
+    public function pay(): void {
+        require_once "../view/partials/_header.php";
         $message = null;
         // On crée une instance d'OrderRepository
         $orderRepository = new OrderRepository();
@@ -125,7 +137,12 @@ class OrderController
             // En cas d'erreur, affiche un message d'erreur
             $message = $exception->getMessage();
         }
-        require_once '../view/payment-view.php';
+        $loader = new \Twig\Loader\FilesystemLoader('../view');
+        $twig = new \Twig\Environment($loader);
+        echo $twig->render('pay.twig', [
+            'message' => $message,
+            'order' => $order
+        ]);
     }
 
 }
