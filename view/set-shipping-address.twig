@@ -8,17 +8,17 @@
         <button type="submit">Valider</button>
     </form>
 
-    <p>Merci de votre confiance <?php echo $order->getCustomerName(); ?></p>
+    <p>Merci de votre confiance {{ order.getCustomerName() }}</p>
 
-    <p>Commande numéro : <?php echo $order->getId(); ?></p>
-    <h2> <?php echo $message; ?></h2>
-    <p>Adresse : <?php echo $order->getAddress(); ?></p>
+    <p>Commande numéro : {{ order.getId() }}</p>
+    <h2>{{ message }}</h2>
+    <p>Adresse : {{ order.getAddress() }}</p>
 
     <p>Le coût total de votre commande est de :
-        <?php echo $order->totalPrice(); ?> euros.</p>
+        {{ order.totalPrice() }} euros.</p>
 
-    <p>Vous avez effectué la commande le <?php echo $order->dateTime(); ?> à
-        <?php echo $order->hourTime(); ?></p>
+    <p>Vous avez effectué la commande le {{ order.dateTime() }} à
+        {{ order.hourTime() }}</p>
 </main>
 <?php require_once "../view/partials/_footer.php"; ?>
 
