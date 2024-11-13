@@ -87,7 +87,6 @@ class Order
     public function totalPrice() {
         return $this->totalPrice;
     }
-
     // On crée une méthode (getter) afin de récupérer l'id sans qu'il devienne modifiable
     public function getId() {
         return $this->id;

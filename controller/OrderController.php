@@ -76,10 +76,11 @@ class OrderController
     public function setShippingAddress() {
         $message = null;
         // On crée une nouvelle instance
+        // Pour pouvoir utiliser ses méthodes
         $orderRepository = new OrderRepository();
-        // ON récupère la commande via notre "BDD"
+        // ON récupère la commande via notre "BDD", existante
         $order = $orderRepository->findOrder();
-        // On vérifie si le formulaire à bien été soumis
+        // On vérifie si le formulaire à bien été soumis et récupère ces données
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // On vérifie que shippingAddress existe
             if (key_exists('shippingAddress', $_POST)) {
@@ -98,6 +99,26 @@ class OrderController
             }
         }
         require_once('../view/set-shipping-address-view.php');
+    }
+    // Méthode pour gérer le paiement
+    public function pay()
+    {
+        $message = null;
+        // On crée une instance d'OrderRepository
+        $orderRepository = new OrderRepository();
+        // On récupère la commande depuis notre "pseudo" BDD
+        $order = $orderRepository->findOrder();
+        try {
+            // Tente de payer la commande
+            $order->pay();
+            // Sauvegarde l'état mis à jour
+            $orderRepository->persistOrder($order);
+            $message = "Paiement réussi !";
+        } catch (Exception $exception) {
+            // En cas d'erreur, affiche un message d'erreur
+            $message = $exception->getMessage();
+        }
+        require_once '../view/payment-view.php';
     }
 
 }

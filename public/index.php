@@ -25,8 +25,11 @@ if ($endUri === "order") {
     $orderController = new OrderController();
     $orderController->removeProduct();
 } else if ($endUri === "set-shipping-address") {
+    $orderController = new OrderController();
+    $orderController->setShippingAddress();
+} else if ($endUri === "pay") {
         $orderController = new OrderController();
-        $orderController->setShippingAddress();
+        $orderController->pay();
 } else {
     $errorController = new ErrorController();
     $errorController->notFound();
