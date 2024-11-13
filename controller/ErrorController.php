@@ -2,7 +2,7 @@
 
 class ErrorController {
 
-    public function notFound() {
+    public function notFound(): void {
         require "../view/error404.php";
     }
 }

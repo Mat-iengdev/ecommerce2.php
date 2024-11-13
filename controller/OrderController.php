@@ -2,12 +2,13 @@
 
 require_once('../model/Order.php');
 require_once "../model/OrderRepository.php";
+require_once "../vendor/autoload.php";
 
 class OrderController
 {
 
-    public function Order()
-    {
+    public function Order(): void {
+        require_once "../view/partials/_header.php";
         $message = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,12 +29,18 @@ class OrderController
 
             }
         }
-
-        require_once('../view/order-view.php');
+        // je créé la config de twig en lui indiquant le chemin pour accéder aux templates
+        $loader = new \Twig\Loader\FilesystemLoader('../view');
+        // je charge twig avec la configuration
+        // ça me permet d'avoir une variable $twig qui contient une instance
+        // de la classe twig
+        // et donc pouvoir utiliser les méthodes public que twig crées
+        $twig = new \Twig\Environment($loader);
+        echo $twig->render('order.twig', ['message' => $message]);
     }
 
 // Nouvelle méthode addProduct
-    public function addProduct()
+    public function addProduct(): void
     {
 
         // On récupère ici $Order en base de données
@@ -56,7 +63,7 @@ class OrderController
     }
 
     // Nouvelle méthode pour supprimer un produit de notre commande
-    public function removeProduct() {
+    public function removeProduct(): void {
         $message = null;
         // On crée une nouvelle instance OrderRepository()
         $orderRepository = new OrderRepository();
@@ -73,7 +80,7 @@ class OrderController
         require_once '../view/remove-product-view.php';
     }
 
-    public function setShippingAddress() {
+    public function setShippingAddress(): void {
         $message = null;
         // On crée une nouvelle instance
         // Pour pouvoir utiliser ses méthodes
@@ -101,7 +108,7 @@ class OrderController
         require_once('../view/set-shipping-address-view.php');
     }
     // Méthode pour gérer le paiement
-    public function pay()
+    public function pay(): void
     {
         $message = null;
         // On crée une instance d'OrderRepository

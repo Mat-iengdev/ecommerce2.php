@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
 class Order
 {
-    private $id;
-    private $customerName;
-    private $status;
-    private $totalPrice;
-    private $products = [];
-    private $shippingAddress;
+    private string $id;
+    private string $customerName;
+    private string $status;
+    private float $totalPrice;
+    private array $products;
+    private ?string $shippingAddress;
 
-    public function __construct($customerName)
+    public function __construct(string $customerName)
     {
         if (mb_strlen($customerName) < 3) {
             throw new Exception("Merci de remplir un nom correct");
@@ -19,9 +20,10 @@ class Order
         $this->totalPrice = 0;
         $this->customerName = $customerName;
         $this->id = uniqid();
+        $this->products = [];
     }
 
-    public function addProduct()
+    public function addProduct(): void
     {
         if ($this->status === "cart") {
             $this->products[] = "Pringles";
@@ -31,7 +33,7 @@ class Order
         }
     }
 
-    public function removeProduct()
+    public function removeProduct(): void
     {
         if ($this->status === "cart" && !empty($this->products)) {
             array_pop($this->products);
@@ -39,7 +41,7 @@ class Order
         }
     }
 
-    public function setShippingAddress($shippingAddress)
+    public function setShippingAddress(string $shippingAddress)
     {
         if ($this->status === "cart") {
             $this->shippingAddress = $shippingAddress;
@@ -50,7 +52,7 @@ class Order
 
     }
 
-    public function pay()
+    public function pay(): void
     {
         if ($this->status === "shippingAddressSet" && !empty($this->products)) {
             $this->status = "paid";
@@ -72,32 +74,32 @@ class Order
         }
     }
 
-    public function dateTime() {
+    public function dateTime(): string {
         // Utilise la fonction date pour formater la date
         $dateTime = date('d-m-Y'); // Format : jour-mois-année
         return $dateTime;
     }
 
-    public function hourTime() {
+    public function hourTime(): string {
         // Utilise la fonction date pour formater l'heure actuelle
         $dateTime = date('H:i'); // Format : heure:minutes
         return $dateTime;
     }
 
-    public function totalPrice() {
+    public function totalPrice(): float {
         return $this->totalPrice;
     }
     // On crée une méthode (getter) afin de récupérer l'id sans qu'il devienne modifiable
-    public function getId() {
+    public function getId(): string {
         return $this->id;
     }
-    public function getProducts() {
+    public function getProducts(): array {
         return $this->products;
     }
-    public function getAddress() {
+    public function getAddress(): string {
         return $this->shippingAddress;
     }
-    public function getCustomerName() {
+    public function getCustomerName(): string {
         return $this->customerName;
     }
 }
